@@ -1,0 +1,1 @@
+INDEX VERSION 1.127+/home/campus30/mdwoodfo/classes/senior/cs4121/clojure/ClojureGroup/.metadata/.plugins/org.eclipse.jdt.core
