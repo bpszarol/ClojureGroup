@@ -1,14 +1,11 @@
-# calculator
+# ClojureGroup
+Group members:
+  - Brian Szaroletta
+  - Will DeVries
+  - Mark Woodford
+  - Sarah Adler
 
-A Clojure library designed to ... well, that part is up to you.
+Seesaw tutorial:
+https://gist.github.com/daveray/1441520
 
-## Usage
-
-FIXME
-
-## License
-
-Copyright © 2015 FIXME
-
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+This is a test edit to make sure I can still git from labs. - Will
