@@ -82,31 +82,6 @@
           :hgap 10
           :vgap 10))
 
-(def gp (grid-panel
-          :columns 1
-          :items
-          [(grid-panel
-             :columns 3
-             :items
-             [(button :text "1" :bounds [:* :* 50 50]) 
-              (button :text "2")
-              (button :text "3")
-              (button :text "4")
-              (button :text "5")
-              (button :text "6")
-              (button :text "7")
-              (button :text "8")
-              (button :text "9")]
-             :vgap 5
-             :hgap 5)
-           (grid-panel
-             :columns 2
-             :items 
-             [(button :text "0")
-              (button :text ".")]
-             :vgap 5
-             :hgap 5)]))
-
 (defn -main [& args]
   (config! mainframe :content bp)
   (-> mainframe show!)
