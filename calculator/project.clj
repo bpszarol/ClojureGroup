@@ -6,4 +6,5 @@
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [seesaw "1.4.2" :exclusions [org.clojure/clojure]]
                  [instaparse "1.4.1"]]
-  :main calculator.core)
+  :main calculator.core
+  :aot [calculator.core])
