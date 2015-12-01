@@ -12,7 +12,7 @@
   (config! mainframe :content c)
   c)
 
-(def t (text :editable? false))
+(def t (text :editable? true))
 
 (def one (button :text "1"))
 (listen one 

@@ -13,8 +13,10 @@
      mul = mul-div <'*'> term
      div = mul-div <'/'> term
      <term> = number | <'('> add-sub <')'>
-     number = #'[0-9]+'"))
+     number = #'[0-9]+'"
+    :auto-whitespace :standard))
 
+;; Defines what Clojure functions to replace parsed tokens with
 (def transform-options
   {:number read-string,
    :add +,
@@ -23,6 +25,10 @@
    :div /,
    :expr identity})
 
+;; Parses the input string and transforms it into a Clojure expression
+;; Malformed input is handled by returning an empty string
 (defn parse [input]
-   (->> (arithmetic input)
-        (insta/transform transform-options)))
+  (let [result (arithmetic input)]
+    (if (insta/failure? result)
+      ""
+      (insta/transform transform-options result))))
