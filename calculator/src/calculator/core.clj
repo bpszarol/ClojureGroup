@@ -1,9 +1,10 @@
 (ns calculator.core (:gen-class))
 
 (use 'seesaw.core)
+(use 'calculator.parser)
 
 (def mainframe (frame :title "Clojure Calculator"
-                      :size [230 :by 250]
+                      :size [300 :by 250]
                       :resizable? false
                       :on-close :exit))
 
@@ -57,9 +58,38 @@
 (listen dot 
         :mouse-clicked (fn [e] (config! t :text (str (text t) "."))))
 
+(def lparen (button :text "("))
+(listen lparen 
+        :mouse-clicked (fn [e] (config! t :text (str (text t) "("))))
+
+(def rparen (button :text ")"))
+(listen rparen 
+        :mouse-clicked (fn [e] (config! t :text (str (text t) ")"))))
+
 (def cl (button :text "Clear"))
 (listen cl
         :mouse-clicked (fn [e] (config! t :text "")))
+
+(def enter (button :text "Enter"))
+(listen enter
+        :mouse-clicked (fn [e]
+                         (config! t :text (parse (text t)))))
+
+(def div (button :text "/"))
+(listen div
+        :mouse-clicked (fn [e] (config! t :text (str (text t) "/"))))
+
+(def mul (button :text "*"))
+(listen mul
+        :mouse-clicked (fn [e] (config! t :text (str (text t) "*"))))
+
+(def sub (button :text "-"))
+(listen sub
+        :mouse-clicked (fn [e] (config! t :text (str (text t) "-"))))
+
+(def add (button :text "+"))
+(listen add
+        :mouse-clicked (fn [e] (config! t :text (str (text t) "+"))))
 
 (def bp (border-panel
           :center
@@ -75,10 +105,15 @@
                 eight
                 nine 
                 zero
+                lparen
+                rparen
                 dot])
           :north t
           :south "SOUTH"
-          :east cl
+          :east (grid-panel
+								  :items [cl enter])
+          :west (grid-panel
+								  :items [div mul sub add])
           :hgap 10
           :vgap 10))
 
