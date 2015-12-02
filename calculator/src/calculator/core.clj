@@ -14,57 +14,20 @@
 
 (def t (text :editable? true))
 
-(def one (button :text "1"))
-(listen one 
-        :mouse-clicked (fn [e] (config! t :text (str (text t) "1"))))
+(defn evaluate []
+  (config! t :text (parse (text t))))
 
-(def two (button :text "2"))
-(listen two 
-        :mouse-clicked (fn [e] (config! t :text (str (text t) "2"))))
+(defn keyboard-listener [e]
+    (cond (= \newline (.getKeyChar e))
+          (evaluate)))
 
-(def three (button :text "3"))
-(listen three 
-        :mouse-clicked (fn [e] (config! t :text (str (text t) "3"))))
-
-(def four (button :text "4"))
-(listen four 
-        :mouse-clicked (fn [e] (config! t :text (str (text t) "4"))))
-
-(def five (button :text "5"))
-(listen five 
-        :mouse-clicked (fn [e] (config! t :text (str (text t) "5"))))
-
-(def six (button :text "6"))
-(listen six 
-        :mouse-clicked (fn [e] (config! t :text (str (text t) "6"))))
-
-(def sev (button :text "7"))
-(listen sev 
-        :mouse-clicked (fn [e] (config! t :text (str (text t) "7"))))
-
-(def eight (button :text "8"))
-(listen eight 
-        :mouse-clicked (fn [e] (config! t :text (str (text t) "8"))))
-
-(def nine (button :text "9"))
-(listen nine 
-        :mouse-clicked (fn [e] (config! t :text (str (text t) "9"))))
-
-(def zero (button :text "0"))
-(listen zero 
-        :mouse-clicked (fn [e] (config! t :text (str (text t) "0"))))
-
-(def dot (button :text "."))
-(listen dot 
-        :mouse-clicked (fn [e] (config! t :text (str (text t) "."))))
-
-(def lparen (button :text "("))
-(listen lparen 
-        :mouse-clicked (fn [e] (config! t :text (str (text t) "("))))
-
-(def rparen (button :text ")"))
-(listen rparen 
-        :mouse-clicked (fn [e] (config! t :text (str (text t) ")"))))
+(defn make-btns [labels]
+  (map (fn[label]
+         (let [btn (button :text label)]
+           (listen btn
+                   :mouse-clicked (fn [e] (config! t :text (str (text t) label))))
+           btn))
+       labels))
 
 (def cl (button :text "Clear"))
 (listen cl
@@ -72,52 +35,28 @@
 
 (def enter (button :text "Enter"))
 (listen enter
-        :mouse-clicked (fn [e]
-                         (config! t :text (parse (text t)))))
+        :mouse-clicked (fn[e] (evaluate)))
 
-(def div (button :text "/"))
-(listen div
-        :mouse-clicked (fn [e] (config! t :text (str (text t) "/"))))
-
-(def mul (button :text "*"))
-(listen mul
-        :mouse-clicked (fn [e] (config! t :text (str (text t) "*"))))
-
-(def sub (button :text "-"))
-(listen sub
-        :mouse-clicked (fn [e] (config! t :text (str (text t) "-"))))
-
-(def add (button :text "+"))
-(listen add
-        :mouse-clicked (fn [e] (config! t :text (str (text t) "+"))))
+(listen t
+        :key-typed keyboard-listener)
 
 (def bp (border-panel
           :center
           (flow-panel
             :items 
-               [one
-                two
-                three
-                four
-                five
-                six
-                sev
-                eight
-                nine 
-                zero
-                lparen
-                rparen
-                dot])
+               (make-btns ["1" "2" "3"
+                           "4" "5" "6"
+                           "7" "8" "9"
+                           "0" "(" ")"
+                           "."]))
           :north t
-          :south "SOUTH"
           :east (grid-panel
 								  :items [cl enter])
           :west (grid-panel
-								  :items [div mul sub add])
+								  :items (make-btns ["/" "*" "-" "+"]))
           :hgap 10
           :vgap 10))
 
 (defn -main [& args]
   (config! mainframe :content bp)
-  (-> mainframe show!)
-  )
+  (-> mainframe show!))
