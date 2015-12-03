@@ -1,17 +1,19 @@
 (ns calculator.parser
   (:require [instaparse.core :as insta]))  ;; "instaparse" is a parser that takes a BNF grammar
+(use 'clojure.math.numeric-tower)
 
 
 ;; Adapted from https://github.com/Engelberg/instaparse
 (def arithmetic
   (insta/parser
     "expr = add-sub
-     <add-sub> = mul-div | add | sub
+     <add-sub> = mul-div | add | sub | exp
      add = add-sub <'+'> mul-div
      sub = add-sub <'-'> mul-div
-     <mul-div> = term | mul | div
+     <mul-div> = (term | mul | div) | exp
      mul = mul-div <'*'> term
      div = mul-div <'/'> term
+     exp = term <'^'> (term | exp)
      <term> = num | <'('> add-sub <')'>
      num = negative? (decimal-num | integer-num) exponent?
      <exponent> = 'E' sign integer-num
@@ -43,6 +45,10 @@
   (with-precision precision
     (apply / nums)))
 
+(defn exponent [& nums]
+  (with-precision precision
+    (bigdec (apply expt nums))))
+
 ;; Defines what Clojure functions to replace parsed tokens with
 (def transform-options
   {:num parse-num,
@@ -50,7 +56,8 @@
    :sub subtraction,
    :mul multiplication,
    :div division,
-   :expr identity})
+   :expr identity,
+   :exp exponent })
 
 ;; Parses the input string and transforms it into a Clojure expression
 ;; Malformed input is handled by returning an empty string
