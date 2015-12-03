@@ -13,7 +13,9 @@
      mul = mul-div <'*'> term
      div = mul-div <'/'> term
      <term> = num | <'('> add-sub <')'>
-     num = negative? (decimal-num | integer-num)
+     num = negative? (decimal-num | integer-num) exponent?
+     <exponent> = 'E' sign integer-num
+     <sign> = '-' | '+'
      <negative> = '-'
      <decimal-num> = digit* '.' digit+
      <digit> = #'[0-9]'
