@@ -17,6 +17,9 @@
      <term> = num | <'('> add-sub <')'>
      num = negative? (decimal-num | integer-num) exponent?
      <exponent> = 'E' sign integer-num
+     sine = 'sin(' term ')'
+     cosine = 'cos' term ')'
+     tangent = 'tan' term ')'
      <sign> = '-' | '+'
      <negative> = '-'
      <decimal-num> = digit* '.' digit+
@@ -49,6 +52,18 @@
   (with-precision precision
     (bigdec (apply expt nums))))
 
+(defn sine [num]
+  (with-precision precision
+    (bigdec (apply Math/sin nums))))
+
+(defn cosine [num]
+  (with-precision precision
+    (bigdec (apply Math/cos nums))))
+
+(defn tangent [num]
+  (with-precision precision
+    (bigdec (apply Math/tan nums))))
+
 ;; Defines what Clojure functions to replace parsed tokens with
 (def transform-options
   {:num parse-num,
@@ -57,7 +72,10 @@
    :mul multiplication,
    :div division,
    :expr identity,
-   :exp exponent })
+   :exp exponent,
+   :sine sine,
+   :cosine cosine,
+   :tangent tangent })
 
 ;; Parses the input string and transforms it into a Clojure expression
 ;; Malformed input is handled by returning an empty string
