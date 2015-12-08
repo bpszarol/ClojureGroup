@@ -54,15 +54,15 @@
 
 (defn sine [num]
   (with-precision precision
-    (bigdec (apply Math/sin nums))))
+    (bigdec (Math/sin num))))
 
 (defn cosine [num]
   (with-precision precision
-    (bigdec (apply Math/cos nums))))
+    (bigdec (Math/cos num))))
 
 (defn tangent [num]
   (with-precision precision
-    (bigdec (apply Math/tan nums))))
+    (bigdec (Math/tan num))))
 
 ;; Defines what Clojure functions to replace parsed tokens with
 (def transform-options

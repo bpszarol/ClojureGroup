@@ -53,7 +53,12 @@
           :east (grid-panel
 								  :items [cl enter])
           :west (grid-panel
-								  :items (make-btns ["/" "*" "-" "+"]))
+								  :items (make-btns ["/" "*" "-" "+" "^"])
+                  ;:columns 2
+                  )
+          :south (grid-panel
+                   :items (make-btns ["sin" "cos" "tan"])
+                   :columns 3)
           :hgap 10
           :vgap 10))
 
