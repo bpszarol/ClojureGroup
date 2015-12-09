@@ -48,9 +48,9 @@
   (with-precision precision
     (apply / nums)))
 
-(defn exponent [& nums]
+(defn exponent [num1 num2]
   (with-precision precision
-    (bigdec (apply expt nums))))
+    (bigdec (Math/pow num1 num2))))
 
 (defn sine [num]
   (with-precision precision
@@ -87,5 +87,8 @@
       (try
         (str (insta/transform transform-options result))
         (catch Exception e
-          (do (println (str "ERR Transform\n" (.getMessage e)))
-              "ERR"))))))
+          (if (instance? NumberFormatException e)
+            (do (println (str "Overflow!\n")) "Overflow!") 
+            (do (println (str "ERR Transform\n" (.getMessage e)))
+              (.printStackTrace e)
+                (.getMessage e))))))))
