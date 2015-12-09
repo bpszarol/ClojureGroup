@@ -17,9 +17,9 @@
      <term> = num | <'('> add-sub <')'>
      num = negative? (decimal-num | integer-num) exponent?
      <exponent> = 'E' sign integer-num
-     sine = 'sin(' term ')'
-     cosine = 'cos' term ')'
-     tangent = 'tan' term ')'
+     sine = <'sin('> term <')'>
+     cosine = <'cos'> term <')'>
+     tangent = <'tan'> term <')'>
      <sign> = '-' | '+'
      <negative> = '-'
      <decimal-num> = digit* '.' digit+
