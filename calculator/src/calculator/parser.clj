@@ -7,19 +7,20 @@
 (def arithmetic
   (insta/parser
     "expr = add-sub
-     <add-sub> = mul-div | add | sub | exp
+     <add-sub> = mul-div | add | sub | exp | bannannas
      add = add-sub <'+'> mul-div
      sub = add-sub <'-'> mul-div
-     <mul-div> = (term | mul | div) | exp
+     <mul-div> = (term | mul | div) | exp | bannannas
      mul = mul-div <'*'> term
      div = mul-div <'/'> term
      exp = term <'^'> (term | exp)
      <term> = num | <'('> add-sub <')'>
      num = negative? (decimal-num | integer-num) exponent?
      <exponent> = 'E' sign integer-num
-     sine = <'sin('> term <')'>
-     cosine = <'cos'> term <')'>
-     tangent = <'tan'> term <')'>
+     <bannannas> = sine | cosine | tangent
+     sine = <'sin('> expr <')'>
+     cosine = <'cos('> expr <')'>
+     tangent = <'tan('> expr <')'>
      <sign> = '-' | '+'
      <negative> = '-'
      <decimal-num> = digit* '.' digit+
@@ -82,13 +83,18 @@
 (defn parse [input]
   (let [result (arithmetic input)]
     (if (insta/failure? result)
-      (do (println (str "ERR Parse\n" result))
+      (do (println (insta/get-failure result))
           "ERR")
       (try
         (str (insta/transform transform-options result))
         (catch Exception e
+<<<<<<< HEAD
           (if (instance? NumberFormatException e)
             (do (println (str "Overflow!\n")) "Overflow!") 
             (do (println (str "ERR Transform\n" (.getMessage e)))
               (.printStackTrace e)
                 (.getMessage e))))))))
+=======
+          (do (println (str "ERR Transform\n" (.getMessage e)))
+              (str "ERR: " (.getMessage e))))))))
+>>>>>>> 522ca1736c7806355338a2c509f53499130bd54d
