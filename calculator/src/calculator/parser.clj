@@ -88,13 +88,8 @@
       (try
         (str (insta/transform transform-options result))
         (catch Exception e
-<<<<<<< HEAD
           (if (instance? NumberFormatException e)
             (do (println (str "Overflow!\n")) "Overflow!") 
             (do (println (str "ERR Transform\n" (.getMessage e)))
               (.printStackTrace e)
                 (.getMessage e))))))))
-=======
-          (do (println (str "ERR Transform\n" (.getMessage e)))
-              (str "ERR: " (.getMessage e))))))))
->>>>>>> 522ca1736c7806355338a2c509f53499130bd54d
