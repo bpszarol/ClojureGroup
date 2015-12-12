@@ -1,4 +1,6 @@
-Instructions to compile:
-1) Install leiningen:
-  a) Place the lein script on $PATH somewhere (eg. ~/bin)
-  b) PLEASE HOLD
+Instructions to compile and run:
+1) cd to calculator directory
+2) Run ./lein (this installs leiningen, a Clojure automation tool)
+3) Run ./lein uberjar (this may take up to a few minutes)
+4) cd to calculator/target
+5) Run java -jar calculator-0.1.0-SNAPSHOT-standalone.jar
