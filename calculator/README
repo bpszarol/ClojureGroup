@@ -1,0 +1,4 @@
+Instructions to compile:
+1) Install leiningen:
+  a) Place the lein script on $PATH somewhere (eg. ~/bin)
+  b) PLEASE HOLD
